@@ -3,8 +3,9 @@ This are set of UDFs and queries that you can use with Hive to use TPCH datagen 
 
 ##How to use
 1. Clone this repo.
+
     ```shell
-    git clone https://github.com/dharmeshkakadia/https://github.com/dharmeshkakadia/tpch-datagen-as-hive-query/ && cd https://github.com/dharmeshkakadia/tpch-datagen-as-hive-query
+    git clone https://github.com/dharmeshkakadia/tpch-datagen-as-hive-query/ && cd tpch-datagen-as-hive-query
     ```
 2. Run TPCHDataGen.hql with settings.hql file and set the required config variables.
     ```shell
