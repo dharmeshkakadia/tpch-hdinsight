@@ -18,15 +18,15 @@ This are set of UDFs and queries that you can use with Hive to use TPCH datagen 
 
 3. Now you can create tables on the generated data.
     ```shell
-    hive -i settings.hql -f ddl/createAllExternalTables.hql -hiveconf LOCATION=/HiveTPCH/
+    hive -i settings.hql -f ddl/createAllExternalTables.hql -hiveconf LOCATION=/HiveTPCH/ -hiveconf DBNAME=tpch
     ```
     Generate ORC tables and analyze
     ```shell
-    hive -i settings.hql -f ddl/createAllORCTables.hql -hiveconf ORCDBNAME=tpch_orc -hiveconf SOURCE=default 
+    hive -i settings.hql -f ddl/createAllORCTables.hql -hiveconf ORCDBNAME=tpch_orc -hiveconf SOURCE=tpch 
     hive -i settings.hql -f ddl/analyze.hql -hiveconf ORCDBNAME=tpch_orc 
     ```
 
 4. Run the queries !
     ```shell
-    hive -d tpch_orc -i settings.hql -f queries/tpch_query1.hql 
+    hive -database tpch_orc -i settings.hql -f queries/tpch_query1.hql 
     ```
