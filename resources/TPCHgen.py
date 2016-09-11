@@ -48,13 +48,7 @@ def copy_local_file_to_hdfs(local_path, hdfs_path):
     execute("%s -copyFromLocal -f %s %s" % (HDFS_CMD, local_path, hdfs_path))
 
 def execute(cmd):
-    print("Executing command: " + cmd)
-    try:
-        subprocess.call(cmd,stdin=subprocess.PIPE,stderr=subprocess.STDOUT,shell=True)
-    except subprocess.CalledProcessError as exc:
-        print("Failed command : " + exc.cmd)
-        print("Dir contents : " + os.listdir(os.getcwd()))
-        print(exc.output)
+    subprocess.check_call(cmd,stdin=subprocess.PIPE,stderr=subprocess.STDOUT,shell=True)  
 
 def main():
     parser = argparse.ArgumentParser(description='Generate TPCH data in parallel')
@@ -83,10 +77,6 @@ def main():
             usage()
             sys.exit()
 
-        print("hdfs_output: %s" % args.output)
-        print("num_parts: %d" % args.num_parts)
-        print("scale_factor: %.1f" % args.scale)
-        print("partition: %d" % partition)
         generate_data_to_hdfs(args.output, partition, args.scale, args.num_parts)
 
 if __name__ == "__main__":
