@@ -47,8 +47,15 @@ def copy_partitioned_table_to_hdfs(hdfs_output, table_name, partition):
 def copy_local_file_to_hdfs(local_path, hdfs_path):
     execute("%s -copyFromLocal -f %s %s" % (HDFS_CMD, local_path, hdfs_path))
 
-def execute(cmd):
-    subprocess.check_call(cmd,stdin=subprocess.PIPE,stderr=subprocess.STDOUT,shell=True)  
+def execute(cmd,retry=10):
+    if(retry<0):
+        sys.exit(1)
+
+    try:
+        subprocess.check_call(cmd,stdin=subprocess.PIPE,stderr=subprocess.STDOUT,shell=True)
+    except:
+        execute(cmd,retry-1)
+
 
 def main():
     parser = argparse.ArgumentParser(description='Generate TPCH data in parallel')
