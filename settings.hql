@@ -1,0 +1,1 @@
+ SET hive.tez.container.size=2048;
