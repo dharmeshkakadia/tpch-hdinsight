@@ -3,7 +3,7 @@
 This UDF generates k-th part of n part TPCH generartion. This uses dbgen to run in parallel and uploads the output to HDFS.
 nation and region tables are not pratitioned and are only generate on one node.
 It requires following files to be added using "ADD FILE" syntax to the session.
-- dbgen.exe
+- dbgen
 - dists.dss
 
 """
@@ -21,7 +21,7 @@ def usage():
 def generate_data_to_hdfs(hdfs_output, partition, scale_factor, num_parts):
     """Generate data using dbgen and save it to HDFS."""
 
-    execute("dbgen.exe -b ./dists.dss -v -f -s %.1f -S %d -C %d" % (scale_factor, partition, num_parts))
+    execute("./dbgen -b ./dists.dss -v -f -s %.1f -S %d -C %d" % (scale_factor, partition, num_parts))
 
     if partition == 1:
         # copy the two non-partitioned tables.
