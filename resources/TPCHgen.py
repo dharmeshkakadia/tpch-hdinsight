@@ -21,7 +21,7 @@ def usage():
 def generate_data_to_hdfs(hdfs_output, partition, scale_factor, num_parts):
     """Generate data using dbgen and save it to HDFS."""
 
-    execute("./dbgen -b ./dists.dss -v -f -s %.1f -S %d -C %d" % (scale_factor, partition, num_parts))
+    execute("./dbgen -b ./dists.dss -v -f -s %d -S %d -C %d" % (scale_factor, partition, num_parts))
 
     if partition == 1:
         # copy the two non-partitioned tables.
