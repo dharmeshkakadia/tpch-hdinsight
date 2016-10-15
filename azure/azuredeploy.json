@@ -63,7 +63,7 @@
     "resources": [
       {
         "name": "[variables('clusterVNetName')]",
-        "type": "Microsoft.Network/virtualNetworks",
+        "type": "Microsoft.HDInsight/clusters",
         "location": "[resourceGroup().location]",
         "apiVersion": "[variables('defaultApiVersion')]",
         "dependsOn": [ ],
@@ -106,8 +106,9 @@
         ],
         "tags": { },
         "properties": {
-          "clusterVersion": "3.2",
+          "clusterVersion": "3.5",
           "osType": "Linux",
+          "tier": "standard",  
           "clusterDefinition": {
             "kind": "[variables('clusterType')]",
 
