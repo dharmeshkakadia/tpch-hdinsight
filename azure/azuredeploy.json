@@ -155,7 +155,7 @@
                 "scriptActions": [
                   {
                     "name": "TPCH Benchmark",
-                    "uri": "https://raw.githubusercontent.com/dharmeshkakadia/tpch-datagen-as-hive-query/azure/TPCH_installer.sh",
+                    "uri": "https://raw.githubusercontent.com/dharmeshkakadia/tpch-datagen-as-hive-query/master/azure/TPCH_installer.sh",
                     "parameters": "[parameters('ScaleFactor')]"
                   }
                 ]
