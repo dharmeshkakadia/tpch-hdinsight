@@ -1,0 +1,7 @@
+{
+  "itemDisplayName": "Creates an HDInsight cluster running TPCH",
+  "description": "Creates an HDInsight linux cluster running the TPCH benchmark",
+  "githubUsername": "dharmeshkakadia",
+  "summary": "Creates an HDInsight cluster running TPCH",
+  "dateUpdated": "2016-10-14"
+}
