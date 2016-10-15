@@ -47,11 +47,11 @@
                 "description": "TPCH Scale Factor"
             }
         },
-        "dbname": {
+        "scriptActionUri": {
             "type": "string",
-            "defaultValue": "tpch_orc",
+            "defaultValue": "https://raw.githubusercontent.com/dharmeshkakadia/tpch-datagen-as-hive-query/azure-template/azure/TPCH_installer.sh",
             "metadata": {
-                "description": "The hive database where the TPCH data will reside."
+                "description": "The TPCH installer script"
             }
         }
      },
