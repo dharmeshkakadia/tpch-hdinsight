@@ -1,5 +1,9 @@
 # tpch-datagen-as-hive-query
-This are set of UDFs and queries that you can use with Hive to use TPCH datagen in parrellel on hadoop cluster.
+This are set of UDFs and queries that you can use with Hive to use TPCH datagen in parrellel on hadoop cluster. You can deploy to azure using :
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdharmeshkakadia%2Ftpch-datagen-as-hive-query%2Fazure-template%2Fazure%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+
 
 ##How to use
 1. Clone this repo.
