@@ -46,13 +46,6 @@
             "metadata": {
                 "description": "TPCH Scale Factor"
             }
-        },
-        "scriptActionUri": {
-            "type": "string",
-            "defaultValue": "https://raw.githubusercontent.com/dharmeshkakadia/tpch-datagen-as-hive-query/azure-template/azure/TPCH_installer.sh",
-            "metadata": {
-                "description": "The TPCH installer script"
-            }
         }
      },
     "variables": {
@@ -162,7 +155,7 @@
                 "scriptActions": [
                   {
                     "name": "TPCH Benchmark",
-                    "uri": "[parameters('scriptActionUri')]",
+                    "uri": "https://raw.githubusercontent.com/dharmeshkakadia/tpch-datagen-as-hive-query/azure/TPCH_installer.sh",
                     "parameters": "[parameters('ScaleFactor')]"
                   }
                 ]
