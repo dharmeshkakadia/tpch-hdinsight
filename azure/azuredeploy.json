@@ -61,7 +61,7 @@
         "defaultApiVersion": "2015-06-15",
         "clusterApiVersion": "2015-03-01-preview",
         "clusterStorageAccountName": "[concat(parameters('clusterName'),'storeacc')]",
-        "hadoopZookeeperSize": "Small"
+        "ZookeeperSize": "Small"
     },
     "resources": [
       {
@@ -140,7 +140,7 @@
                 "minInstanceCount": 1,
                 "targetInstanceCount": "3",
                 "hardwareProfile": {
-                  "vmSize": "[variables(concat(parameters('clusterType'),'ZookeeperSize'))]"
+                  "vmSize": "[variables('ZookeeperSize')]"
                 },
                 "osProfile": {
                   "linuxOperatingSystemProfile": {
@@ -153,6 +153,5 @@
           }
         }
       }
-
     ]
 }
