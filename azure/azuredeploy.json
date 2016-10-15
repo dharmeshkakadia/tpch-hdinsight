@@ -163,7 +163,7 @@
                   {
                     "name": "TPCH Benchmark",
                     "uri": "[parameters('scriptActionUri')]",
-                    "parameters": "[parameters('ScaleFactor')] [parameters('dbname')]"
+                    "parameters": "[parameters('ScaleFactor') , parameters('dbname')]"
                   }
                 ]
               },
