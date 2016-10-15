@@ -86,7 +86,7 @@
                 "restAuthCredential.password": "[parameters('loginPassword')]"
               },
              "core-site": {
-                "fs.defaultFS": "[concat(parameters('clusterName'),'@',variables('clusterStorageAccountName'),'.blob.core.windows.net')]",
+                "fs.defaultFS": "[concat('wasb://',parameters('clusterName'),'@',variables('clusterStorageAccountName'),'.blob.core.windows.net')]",
                 "fs.azure.account.key.dkakadiastoretest.blob.core.windows.net": "[listKeys(concat('Microsoft.Storage/storageAccounts/',variables('clusterStorageAccountName')), '2015-05-01-preview').key1]"
               }
             }
