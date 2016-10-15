@@ -163,7 +163,7 @@
                   {
                     "name": "TPCH Benchmark",
                     "uri": "[parameters('scriptActionUri')]",
-                    "parameters": "[parameters('ScaleFactor') tpch_orc]"
+                    "parameters": "[parameters('ScaleFactor')] tpch_orc"
                   }
                 ]
               },
