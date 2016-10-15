@@ -10,6 +10,7 @@
         },
         "loginUsername": {
             "type": "string",
+            "defaultValue": "hdiuser",
             "metadata": {
                 "description": "These credentials can be used to submit jobs to the cluster, log into cluster dashboards, log into Ambari, and SSH into the cluster."
             }
@@ -52,45 +53,15 @@
         "defaultApiVersion": "2015-06-15",
         "clusterApiVersion": "2015-03-01-preview",
         "clusterType": "hadoop",
-        "clusterVnetSubnetName": "[concat(parameters('clusterName'),'-subnet')]",
-        "clusterVnetAddressSpace": "172.16.228.0/23",
-        "clusterVNetSubnetAddressRange": "172.16.229.0/24",
         "clusterStorageAccountName": "[concat(parameters('clusterName'),'storeacc')]",
-        "clusterVNetName": "[concat(parameters('clusterName'),'-vnet')]",
-        "hadoopZookeeperSize": "Small",
-        "hbaseZookeeperSize": "Medium"
+        "hadoopZookeeperSize": "Small"
     },
     "resources": [
-      {
-        "name": "[variables('clusterVNetName')]",
-        "type": "Microsoft.HDInsight/clusters",
-        "location": "[resourceGroup().location]",
-        "apiVersion": "[variables('defaultApiVersion')]",
-        "dependsOn": [ ],
-        "tags": { },
-        "properties": {
-          "addressSpace": {
-            "addressPrefixes": [
-              "[variables('clusterVNetAddressSpace')]"
-            ]
-          },
-          "subnets": [
-            {
-              "name": "[variables('clusterVNetSubnetName')]",
-              "properties": {
-                "addressPrefix": "[variables('clusterVNetSubnetAddressRange')]"
-              }
-            }
-          ]
-        }
-      },
       {
         "name": "[variables('clusterStorageAccountName')]",
         "type": "Microsoft.Storage/storageAccounts",
         "location": "[resourceGroup().location]",
         "apiVersion": "[variables('defaultApiVersion')]",
-        "dependsOn": [ ],
-        "tags": { },
         "properties": {
           "accountType": "Standard_LRS"
         }
@@ -100,11 +71,7 @@
         "type": "Microsoft.HDInsight/clusters",
         "location": "[resourceGroup().location]",
         "apiVersion": "[variables('clusterApiVersion')]",
-        "dependsOn": [
-          "[concat('Microsoft.Storage/storageAccounts/',variables('clusterStorageAccountName'))]",
-          "[concat('Microsoft.Network/virtualNetworks/',variables('clusterVNetName'))]"
-        ],
-        "tags": { },
+        "dependsOn": ["[concat('Microsoft.Storage/storageAccounts/',variables('clusterStorageAccountName'))]"],
         "properties": {
           "clusterVersion": "3.5",
           "osType": "Linux",
@@ -118,10 +85,9 @@
                 "restAuthCredential.username": "[parameters('loginUsername')]",
                 "restAuthCredential.password": "[parameters('loginPassword')]"
               },
-              "hive-site": {
-                "hive.metastore.client.connect.retry.delay": "5",
-                "hive.execution.engine": "mr",
-                "hive.security.authorization.manager": "org.apache.hadoop.hive.ql.security.authorization.DefaultHiveAuthorizationProvider"
+             "core-site": {
+                "fs.defaultFS": "[concat(parameters('clusterName')],'@',variables('clusterStorageAccountName'),'.blob.core.windows.net')]",
+                "fs.azure.account.key.dkakadiastoretest.blob.core.windows.net": "[listKeys(concat('Microsoft.Storage/storageAccounts/',variables('clusterStorageAccountName')), '2015-05-01-preview').key1]"
               }
             }
           },
@@ -139,6 +105,7 @@
             "roles": [
               {
                 "name": "headnode",
+                "minInstanceCount": 1,
                 "targetInstanceCount": "2",
                 "hardwareProfile": {
                   "vmSize": "[parameters('clusterNodeSize')]"
@@ -148,10 +115,6 @@
                     "username": "[parameters('loginUsername')]",
                     "password": "[parameters('loginPassword')]"
                   }
-                },
-                "virtualNetworkProfile": {
-                  "id": "[resourceId('Microsoft.Network/virtualNetworks', variables('clusterVNetName'))]",
-                  "subnet": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('clusterVNetName')), '/subnets/', variables('clusterVNetSubnetName'))]"
                 },
                 "scriptActions": [
                   {
@@ -163,6 +126,7 @@
               },
               {
                 "name": "workernode",
+                "minInstanceCount": 1,
                 "targetInstanceCount": "[parameters('clusterWorkerNodeCount')]",
                 "hardwareProfile": {
                   "vmSize": "[parameters('clusterNodeSize')]"
@@ -172,14 +136,11 @@
                     "username": "[parameters('loginUsername')]",
                     "password": "[parameters('loginPassword')]"
                   }
-                },
-                "virtualNetworkProfile": {
-                  "id": "[resourceId('Microsoft.Network/virtualNetworks', variables('clusterVNetName'))]",
-                  "subnet": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('clusterVNetName')), '/subnets/', variables('clusterVNetSubnetName'))]"
                 }
               },
               {
                 "name": "zookeepernode",
+                "minInstanceCount": 1,
                 "targetInstanceCount": "3",
                 "hardwareProfile": {
                   "vmSize": "[variables(concat(variables('clusterType'),'ZookeeperSize'))]"
@@ -189,10 +150,6 @@
                     "username": "[parameters('loginUsername')]",
                     "password": "[parameters('loginPassword')]"
                   }
-                },
-                "virtualNetworkProfile": {
-                  "id": "[resourceId('Microsoft.Network/virtualNetworks', variables('clusterVNetName'))]",
-                  "subnet": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('clusterVNetName')), '/subnets/', variables('clusterVNetSubnetName'))]"
                 }
               }
             ]
@@ -200,15 +157,5 @@
         }
       }
 
-    ],
-    "outputs": {
-        "vnet": {
-            "type": "object",
-            "value": "[reference(resourceId('Microsoft.Network/virtualNetworks',variables('clusterVNetName')))]"
-        },
-        "cluster":{
-            "type" : "object",
-            "value" : "[reference(resourceId('Microsoft.HDInsight/clusters',parameters('clusterName')))]"
-        }
-    }
+    ]
 }
