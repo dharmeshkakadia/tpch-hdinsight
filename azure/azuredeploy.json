@@ -87,7 +87,7 @@
               },
              "core-site": {
                 "fs.defaultFS": "[concat('wasb://',parameters('clusterName'),'@',variables('clusterStorageAccountName'),'.blob.core.windows.net')]",
-                "fs.azure.account.key.dkakadiastoretest.blob.core.windows.net": "[listKeys(concat('Microsoft.Storage/storageAccounts/',variables('clusterStorageAccountName')), '2015-05-01-preview').key1]"
+                "[concat('fs.azure.account.key.',variables('clusterStorageAccountName'),'.blob.core.windows.net']": "[listKeys(concat('Microsoft.Storage/storageAccounts/',variables('clusterStorageAccountName')), '2015-05-01-preview').key1]"
               }
             }
           },
