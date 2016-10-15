@@ -38,6 +38,20 @@
             "metadata": {
                 "description": "The number of worker nodes in the HDInsight cluster."
             }
+        },
+        "ScaleFactor": {
+            "type": "int",
+            "defaultValue": 10,
+            "metadata": {
+                "description": "TPCH Scale Factor"
+            }
+        },
+        "dbname": {
+            "type": "string",
+            "defaultValue": "tpch_orc",
+            "metadata": {
+                "description": "The hive database where the TPCH data will reside."
+            }
         }
      },
     "variables": {
