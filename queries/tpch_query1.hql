@@ -1,4 +1,4 @@
-CREATE TABLE tpch_quer1_result AS
+CREATE TABLE tpch_query1_result AS
 
 SELECT l_returnflag
  ,l_linestatus
