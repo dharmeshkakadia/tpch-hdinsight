@@ -69,3 +69,13 @@ This are set of UDFs and queries that you can use with Hive to use TPCH datagen 
     ```shell
     beeline -u "jdbc:hive2://`hostname -f`:10001/tpch_orc;transportMode=http" -n "" -p "" -i settings.hql -f queries/tpch_query1.hql 
     ```
+
+## FAQ
+
+1. Does it work with scale factor 1?
+
+    No. The parrellel data generation assumes that scale > 1. If you are just starting out, I would suggest you start with 10 and then move to standard higher scale factors (100, 1000, 10000,..)
+
+2. Do I have to specify PARTS=SCALE ?
+
+    Yes.
