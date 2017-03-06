@@ -70,6 +70,10 @@ This are set of UDFs and queries that you can use with Hive to use TPCH datagen 
     beeline -u "jdbc:hive2://`hostname -f`:10001/tpch_orc;transportMode=http" -n "" -p "" -i settings.hql -f queries/tpch_query1.hql 
     ```
 
+If you want to run all the queries 10 times and measure the times it takes, you can use the following command:
+
+    for f in queries/*.sql; do for i in {1..10} ; do STARTTIME="`date +%s`";  beeline -u "jdbc:hive2://`hostname -f`:10001/tpch_orc;transportMode=http" -i settings.hql -f $f  > $f.run_$i.out 2>&1 ; ENDTIME="`date +%s`"; echo "$f,$i,$STARTTIME,$ENDTIME,$(($ENDTIME-$STARTTIME))" >> times_orc.csv; done; done;
+
 ## FAQ
 
 1. Does it work with scale factor 1?
@@ -79,3 +83,7 @@ This are set of UDFs and queries that you can use with Hive to use TPCH datagen 
 2. Do I have to specify PARTS=SCALE ?
 
     Yes.
+
+3. How do I avoid my session getting killed due to network errors while long running benchmark?
+    
+   Use byobu. Type byobu which will start a new session and then run the command. It will be there when you come back even if your network connection is broken. 
