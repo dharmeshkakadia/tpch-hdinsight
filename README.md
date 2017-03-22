@@ -5,7 +5,7 @@ This are set of UDFs and queries that you can use with Hive to use TPCH datagen 
 </a>
 
 
-##How to use with Hive CLI
+## How to use with Hive CLI
 1. Clone this repo.
 
     ```shell
@@ -35,7 +35,7 @@ This are set of UDFs and queries that you can use with Hive to use TPCH datagen 
     hive -database tpch_orc -i settings.hql -f queries/tpch_query1.hql 
     ```
 
-##How to use with Beeline CLI
+## How to use with Beeline CLI
 1. Clone this repo.
 
     ```shell
