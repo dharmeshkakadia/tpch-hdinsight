@@ -27,7 +27,7 @@ services:
     ports:
       - "10000:10000"
     healthcheck:
-      test: ["CMD", "beeline", "-u", "jdbc:hive2://localhost:10000/", "-e" "'show tables'"]
+      test: ["CMD", "beeline", "-u", "jdbc:hive2://localhost:10000/", "-e", "'show tables'"]
       interval: 30s
       timeout: 10s
       retries: 5  
