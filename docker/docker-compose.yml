@@ -26,6 +26,11 @@ services:
       - "HIVE_CORE_CONF_javax_jdo_option_ConnectionURL=jdbc:postgresql://hive-metastore/metastore"
     ports:
       - "10000:10000"
+    healthcheck:
+      test: ["CMD", "beeline", "-u", "jdbc:hive2://localhost:10000/", "-e" "'show tables'"]
+      interval: 30s
+      timeout: 10s
+      retries: 5  
   hive-metastore:
     build: .
     container_name: hive-metastore
