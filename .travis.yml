@@ -10,8 +10,6 @@ script:
   - docker-compose -f docker/docker-compose.yml up -d namenode hive-metastore-postgresql datanode hive-metastore hive-server && docker exec hive-server bash -c "git clone https://github.com/dharmeshkakadia/tpch-datagen-as-hive-query/ && cd tpch-datagen-as-hive-query && hive -i settings.hql -f TPCHDataGen.hql -hiveconf SCALE=2 -hiveconf PARTS=2 -hiveconf LOCATION=/HiveTPCH/ -hiveconf TPCHBIN=resources && hive -i settings.hql -f ddl/createAllExternalTables.hql -hiveconf LOCATION=/HiveTPCH/ -hiveconf DBNAME=tpch" 
   - docker exec hive-server bash -c "hive -database tpch -i tpch-datagen-as-hive-query/settings.hql -f tpch-datagen-as-hive-query/queries/tpch_query1.hql"
   - docker exec hive-server bash -c "hive -database tpch -e 'drop table if exists tpch_query1_result' "
-  - docker exec hive-server bash -c "hive -database tpch -i tpch-datagen-as-hive-query/settings.hql -f tpch-datagen-as-hive-query/queries/tpch_query2.hql"
-  - docker exec hive-server bash -c "hive -database tpch -e 'drop table if exists tpch_query2_result' "
   - docker exec hive-server bash -c "hive -database tpch -i tpch-datagen-as-hive-query/settings.hql -f tpch-datagen-as-hive-query/queries/tpch_query3.hql"
   - docker exec hive-server bash -c "hive -database tpch -e 'drop table if exists tpch_query3_result' "
   - docker exec hive-server bash -c "hive -database tpch -i tpch-datagen-as-hive-query/settings.hql -f tpch-datagen-as-hive-query/queries/tpch_query4.hql"
